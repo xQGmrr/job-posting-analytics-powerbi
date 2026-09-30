@@ -1,0 +1,138 @@
+table _Measures
+	lineageTag: f4626d55-e40d-4d40-ba36-b5446ca4ed34
+
+	measure 'Job count' = COUNT(job_postings_fact[job_id])
+		formatString: #,0
+		lineageTag: 73dd94ca-48c4-4a3b-a0b4-b8e904122d4a
+
+	measure 'Skills count' = COUNT(skills_job_dim[skill_id])
+		formatString: #,0
+		lineageTag: 09aa3466-4fe8-42ae-887f-388ae648fe49
+
+	measure 'Skills per job' = DIVIDE([Skills count],[Job count])
+		formatString: 0.0
+		lineageTag: 4cca98a6-cc1c-429d-8fe8-0da732bbd833
+
+	measure 'Median salary' = MEDIAN(job_postings_fact[salary_hour_or_year_avg])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 293766cb-fe1c-4971-8786-9fdfbcb79cee
+
+	measure 'Companies count' = DISTINCTCOUNT(company_dim[company_id])
+		formatString: 0
+		lineageTag: 0adce6b7-632a-40a5-a273-068ddf35f1c6
+
+	measure 'Average Salary' = AVERAGE(job_postings_fact[salary_hour_or_year_avg])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 382e477c-750d-42bb-a448-6b78dfd328b0
+
+	measure 'Highest Salary' = MAX(job_postings_fact[salary_hour_or_year_avg])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 23379d8c-f857-4f1f-a23e-6dd2dcb7dfae
+
+	measure 'Lowest Salary' = MIN(job_postings_fact[salary_hour_or_year_avg])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: ead7d1f6-490d-4e07-b69d-4689f067768d
+
+	measure All_Skills = CALCULATE(COUNT(skills_job_dim[skill_id]),REMOVEFILTERS(skills_job_dim))
+		formatString: #,0
+		lineageTag: a45181e0-b175-491d-b6df-57569744a98d
+
+	measure 'Skill proportion' = ```
+			DIVIDE([Skills count],[All_Skills],"Not Asked") 
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: fdf3f711-e471-4519-9531-8b04b8e3a3ee
+
+	measure 'Most Wanted Skill' =
+			
+			VAR SkillRanking =
+			    TOPN(
+			        1,
+			        VALUES(skills_dim[skills]),
+			        CALCULATE(DISTINCTCOUNT(skills_job_dim[job_id])),
+			        DESC
+			    )
+			RETURN
+			    CONCATENATEX(
+			        SkillRanking,
+			        skills_dim[skills],
+			        ", "
+			    )
+		lineageTag: ab82201d-671f-4040-a6d4-3ee3638c6cfa
+
+	measure 'Least Wanted Skill' =
+			
+			VAR SkillTable =
+			    FILTER(
+			        ADDCOLUMNS(
+			            VALUES(skills_dim[skills]),
+			            "JobCount",
+			                CALCULATE(
+			                    DISTINCTCOUNT(skills_job_dim[job_id])
+			                )
+			        ),
+			        [JobCount] > 1
+			    )
+			
+			VAR MinCount =
+			    MINX(
+			        SkillTable,
+			        [JobCount]
+			    )
+			
+			VAR LeastSkill =
+			    TOPN(
+			        1,
+			        FILTER(
+			            SkillTable,
+			            [JobCount] = MinCount
+			        ),
+			        skills_dim[skills],
+			        ASC
+			    )
+			
+			RETURN
+			    MAXX(
+			        LeastSkill,
+			        skills_dim[skills]
+			    )
+		lineageTag: 9976074f-ae52-45b1-9c2c-f69869b070d2
+
+	measure 'Most Wanted Job' =
+			
+			VAR JobRanking =
+			    TOPN(
+			        1,
+			        VALUES(job_postings_fact[job_title_short]),
+			        CALCULATE(DISTINCTCOUNT(job_postings_fact[job_id])),
+			        DESC
+			    )
+			RETURN
+			    CONCATENATEX(
+			        JobRanking,
+			        job_postings_fact[job_title_short],
+			        ", "
+			    )
+		lineageTag: 3e573be5-839d-4246-965a-84ad6ea16cb2
+
+	measure 'Jobs Platform' = DISTINCTCOUNT(job_postings_fact[job_via])
+		formatString: 0
+		lineageTag: 420454cc-70f4-449a-9bc6-8d5cd6b0e36e
+
+	column Column
+		formatString: 0
+		lineageTag: f463adda-d614-4be1-befe-31b0aca2904f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = d157f0b5aa48425d8489e65bc143e6e9
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

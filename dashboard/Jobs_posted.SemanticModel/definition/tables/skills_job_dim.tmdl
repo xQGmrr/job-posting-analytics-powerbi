@@ -1,0 +1,37 @@
+table skills_job_dim
+	lineageTag: f6f60658-9527-4d1e-ba26-b6c3568ab96a
+
+	column job_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e8cda55-e12b-4731-b6e1-9a2a9d7288a2
+		summarizeBy: none
+		sourceColumn: job_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 28135926-b2c6-440b-b0fd-b7a967c6c1a3
+		summarizeBy: none
+		sourceColumn: skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition skills_job_dim = m
+		mode: import
+		source =
+				let
+				    Source = star_schema_files,
+				    #"D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\_skills_job_dim csv" = Source{[#"Folder Path"="D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\",Name="skills_job_dim.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\_skills_job_dim csv",[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"job_id", Int64.Type}, {"skill_id", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,150 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 1.5889759596026183,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 21,
+            "y": 285
+          },
+          "nodeIndex": "company_dim",
+          "nodeLineageTag": "496fd49e-39b0-4fab-ab20-5c418e5dfdff",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 345.624418529149,
+            "y": 75.892249798835564
+          },
+          "nodeIndex": "job_postings_fact",
+          "nodeLineageTag": "ca458b27-6459-419e-b119-573a976bab28",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "schedule_dim",
+          "nodeLineageTag": "ae202d36-49dc-4d3d-a10a-9c23ba3daa87",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 872.57962358634961,
+            "y": 0
+          },
+          "nodeIndex": "skills_dim",
+          "nodeLineageTag": "a4e3c46e-9c2e-4d78-b4db-1357059e3907",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 702.843644284123,
+            "y": 163
+          },
+          "nodeIndex": "skills_job_dim",
+          "nodeLineageTag": "f6f60658-9527-4d1e-ba26-b6c3568ab96a",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 344.97963274162294,
+            "y": 594.50000762939453
+          },
+          "nodeIndex": "date_dim",
+          "nodeLineageTag": "1b965a5e-aa22-439a-87f6-322e76dd8841",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1156.5796235863495,
+            "y": 297.25000381469727
+          },
+          "nodeIndex": "_Measures",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1440.5796235863495,
+            "y": 321.25000381469727
+          },
+          "nodeIndex": "Parameter",
+          "nodeLineageTag": "d5b40235-2736-4dac-8703-3268b32dcd8c",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1724.5796235863495,
+            "y": 321.25000381469727
+          },
+          "nodeIndex": "Category",
+          "nodeLineageTag": "58bdab79-e01e-4771-956c-69504ae40806",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2008.5796235863495,
+            "y": 321.25000381469727
+          },
+          "nodeIndex": "Measure_Para",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 50.346892102823148,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

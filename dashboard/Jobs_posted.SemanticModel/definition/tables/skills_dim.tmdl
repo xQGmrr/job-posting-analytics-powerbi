@@ -1,0 +1,51 @@
+table skills_dim
+	lineageTag: a4e3c46e-9c2e-4d78-b4db-1357059e3907
+
+	column skill_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c43de291-3afd-444b-9224-0dc96297052e
+		summarizeBy: none
+		sourceColumn: skill_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: 8b94cd39-50aa-45c8-8267-1c074dceaf4c
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	column skills
+		dataType: string
+		lineageTag: c279b0fc-6d3f-4f98-bc89-68d468a73aa5
+		summarizeBy: none
+		sourceColumn: skills
+
+		annotation SummarizationSetBy = Automatic
+
+	partition skills_dim = m
+		mode: import
+		source =
+				let
+				    Source = star_schema_files,
+				    #"D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\_skills_dim csv" = Source{[#"Folder Path"="D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\",Name="skills_dim.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\_skills_dim csv",[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"skill_id", Int64.Type}, {"skills", type text}, {"type", type text}}),
+				    #"Capitalized Each Word" = Table.TransformColumns(#"Changed Type",{{"skills", Text.Proper, type text}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Capitalized Each Word", "Custom", each if [skills] = "Sql" then "SQL" else if [skills] = "Nosql" then "No-SQL" else if [skills] = "Mongodb" then "MongoDB" else if [skills] = "Power Bi" then "Power BI" else if [skills] = "Sas" then "SaS" else if [skills] = "Powerbi" then "Power BI" else if [skills] = "No-sql" then "No-SQL" else if [skills] = "T-sql" then "T-SQL" else if [skills] = "Mysql" then "MySQL" else if [skills] = "Aws" then "AWS" else [skills]),
+				    #"Replaced Value" = Table.ReplaceValue(#"Added Conditional Column","sql","SQL",Replacer.ReplaceText,{"Custom"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","Sql","SQL",Replacer.ReplaceText,{"Custom"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Replaced Value1",{"skills"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Custom", "skills"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"skill_id", "skills", "type"})
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

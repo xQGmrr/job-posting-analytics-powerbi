@@ -1,0 +1,27 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "93be7aa1c3655a36c409",
+  "displayName": "Skills",
+  "displayOption": "FitToPage",
+  "height": 1440,
+  "width": 2560,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#0F172A'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+table Measure_Para
+	lineageTag: 9693dbaf-36f1-4d11-9dd6-1a0f17a9f91e
+
+	column Parameter
+		lineageTag: 107ffc20-460e-4961-a05c-ceee45568a18
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: 887e7ae4-9846-4126-bf80-b0d0e7a072c9
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: 12622dd4-4265-4ce8-8f7b-01ebc2ea3e08
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measure_Para = calculated
+		mode: import
+		source =
+				{
+				    ("Skills count", NAMEOF('_Measures'[Skills count]), 0),
+				    ("Median salary", NAMEOF('_Measures'[Median salary]), 1)
+				}
+
+	annotation PBI_Id = 914748fee59c427980ac730ed47b488a
+

@@ -1,0 +1,31 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["star_schema_files","job_postings_fact","company_dim","skills_dim","skills_job_dim","schedule_dim"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table job_postings_fact
+ref table company_dim
+ref table skills_dim
+ref table skills_job_dim
+ref table schedule_dim
+ref table date_dim
+ref table DateTableTemplate_e22e22d8-f818-4c6d-8a56-1ca97cbc148b
+ref table LocalDateTable_070180a6-e424-48d5-a9c6-ca663336c2e5
+ref table LocalDateTable_89fd7331-3abf-458e-8606-f274c39f86a3
+ref table _Measures
+ref table Parameter
+ref table Category
+ref table Measure_Para
+
+ref cultureInfo en-US
+

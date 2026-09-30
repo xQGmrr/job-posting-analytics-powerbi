@@ -1,0 +1,45 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "cf1cc2a36bc043b10051",
+  "position": {
+    "x": 1146.1186019112449,
+    "y": 98.9281319544443,
+    "z": 3000,
+    "height": 91.689488152899585,
+    "width": 1018.2358947506217,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Global Job Market Overview",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "32pt",
+                      "color": "#cbd5e1"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

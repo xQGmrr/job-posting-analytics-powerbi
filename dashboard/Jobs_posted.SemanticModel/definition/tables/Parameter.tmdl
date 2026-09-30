@@ -1,0 +1,50 @@
+table Parameter
+	lineageTag: d5b40235-2736-4dac-8703-3268b32dcd8c
+
+	column Parameter
+		lineageTag: 2fc2177f-108f-4825-a925-beac39103baf
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: 8e56e406-0f01-4c33-aad4-d9623ad18359
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: e63c28c4-948a-40bd-a190-1544fad76ceb
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Parameter = calculated
+		mode: import
+		source =
+				{
+				    ("job_title_short", NAMEOF('job_postings_fact'[job_title_short]), 0),
+				    ("job_country", NAMEOF('job_postings_fact'[job_country]), 1),
+				    ("job_via", NAMEOF('job_postings_fact'[job_via]), 2),
+				    ("skills", NAMEOF('skills_dim'[skills]), 3)
+				}
+
+	annotation PBI_Id = 3f0146aaae5247159a91487a2cb1583f
+

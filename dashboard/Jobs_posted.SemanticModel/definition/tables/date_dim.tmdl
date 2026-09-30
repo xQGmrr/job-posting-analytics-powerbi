@@ -1,0 +1,113 @@
+table date_dim
+	lineageTag: 1b965a5e-aa22-439a-87f6-322e76dd8841
+
+	column Date
+		formatString: General Date
+		lineageTag: 294792c3-00f2-4ba5-9998-757e2a38d33e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: a3ff9ee2-fcde-47f3-8232-3ab8b47c593f
+			defaultHierarchy: LocalDateTable_89fd7331-3abf-458e-8606-f274c39f86a3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 82b80582-888a-47dc-abba-2098db8298dc
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		lineageTag: 32c558d2-0b9e-4c0b-b6e2-ce75edd69adb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [quarter]
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		lineageTag: de98e7d5-1a7c-4ac6-80a4-34212138cf4e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [date_key]
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_number
+		formatString: 0
+		lineageTag: 29de7f35-fd9d-4679-bda2-e5c82ab6924d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [month_number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		lineageTag: 16300498-d94e-4907-a776-0b4771f814c3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [month_name]
+		sortByColumn: month_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_month
+		lineageTag: 600badfc-02dd-4ae9-a41f-f8512c7886f6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [year_month]
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_number
+		formatString: 0
+		lineageTag: 522ab104-fb00-4545-9e19-8831c624ee0e
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [week_number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column weekday_number
+		formatString: 0
+		lineageTag: 9a316757-74b8-4bf8-bd7f-375bce816a6c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [weekday_number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column weekday_name
+		lineageTag: f40e2bb8-100e-44e0-8625-5bf412daa96f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [weekday_name]
+		sortByColumn: weekday_number
+
+		annotation SummarizationSetBy = Automatic
+
+	partition date_dim = calculated
+		mode: import
+		source =
+				ADDCOLUMNS(
+				    CALENDARAUTO(),
+				    "date_key",FORMAT([Date],"YYYYMMDD"),
+				     "Year",YEAR([Date]),
+				     "month_number",MONTH([Date]),
+				     "month_name",FORMAT([Date],"mmmm"),
+				     "year_month",FORMAT([Date],"YYYY-MM"),
+				     "quarter","Q"&FORMAT([Date],"Q"),
+				     "week_number",WEEKNUM([Date],1),
+				     "weekday_number",WEEKDAY([Date],1),
+				     "weekday_name",FORMAT([Date],"dddd")
+				)
+
+	annotation PBI_Id = 558e31451b4a4c339db467400239da54
+

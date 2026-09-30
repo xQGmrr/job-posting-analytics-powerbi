@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "be72ac740e10aa6224e9",
+  "position": {
+    "x": 84.450844351354888,
+    "y": 41.018981542086749,
+    "z": 1000,
+    "height": 41.018981542086657,
+    "width": 120.6440633590784,
+    "tabOrder": 22004
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Salary",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "20pt",
+                      "color": "#cbd5e1"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "parentGroupName": "dc88f5f900ba026a0cbe"
+}

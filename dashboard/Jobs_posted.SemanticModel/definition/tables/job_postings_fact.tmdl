@@ -1,0 +1,234 @@
+table job_postings_fact
+	lineageTag: ca458b27-6459-419e-b119-573a976bab28
+
+	column job_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 83f2141c-9850-42a2-884d-21bf2410e3a2
+		summarizeBy: none
+		sourceColumn: job_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column company_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d2fac429-0a4f-4e3d-8b13-db5c014d6415
+		summarizeBy: none
+		sourceColumn: company_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_title_short
+		dataType: string
+		lineageTag: f98fa587-6f27-462e-ac86-8900866e8d49
+		summarizeBy: none
+		sourceColumn: job_title_short
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_title
+		dataType: string
+		lineageTag: 0b7039c2-603d-46bc-ac6d-bf02331d2c8d
+		summarizeBy: none
+		sourceColumn: job_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_location
+		dataType: string
+		lineageTag: 77f48510-b9f6-4e0a-999e-58f16ba23323
+		summarizeBy: none
+		sourceColumn: job_location
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_via
+		dataType: string
+		lineageTag: ac33abe8-d57e-4d12-ad7e-8c6e44c4f113
+		summarizeBy: none
+		sourceColumn: job_via
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_schedule_type
+		dataType: string
+		lineageTag: 8646c30b-e82b-4b13-8418-78ecc174c6ce
+		summarizeBy: none
+		sourceColumn: job_schedule_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_work_from_home
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7b2cfb6d-a314-459a-9879-43359bd34919
+		summarizeBy: none
+		sourceColumn: job_work_from_home
+
+		annotation SummarizationSetBy = Automatic
+
+	column search_location
+		dataType: string
+		lineageTag: 84a15a0b-880c-445c-a0cd-03d8576dea20
+		summarizeBy: none
+		sourceColumn: search_location
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_posted_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 91b36735-f07d-41e4-8c5d-03067e379217
+		summarizeBy: none
+		sourceColumn: job_posted_date
+
+		variation Variation
+			isDefault
+			relationship: f5f1e4c6-1577-40fd-91fc-0e42c05fbca7
+			defaultHierarchy: LocalDateTable_070180a6-e424-48d5-a9c6-ca663336c2e5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_no_degree_mention
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e3d949ec-002b-4876-bea8-3d73305ab8d5
+		summarizeBy: none
+		sourceColumn: job_no_degree_mention
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_health_insurance
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7a051f79-0207-459d-ab2c-facee9c83520
+		summarizeBy: none
+		sourceColumn: job_health_insurance
+
+		annotation SummarizationSetBy = Automatic
+
+	column job_country
+		dataType: string
+		lineageTag: 5990b548-ce73-44cf-834a-a4401f37a791
+		summarizeBy: none
+		sourceColumn: job_country
+
+		annotation SummarizationSetBy = Automatic
+
+	column salary_rate
+		dataType: string
+		lineageTag: 3033d9ca-0164-4dc8-b4d1-3b517c583392
+		summarizeBy: none
+		sourceColumn: salary_rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column salary_year_avg
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 4a5abb52-97ea-43ea-a873-8041dd600dbd
+		summarizeBy: sum
+		sourceColumn: salary_year_avg
+
+		annotation SummarizationSetBy = Automatic
+
+	column salary_hour_avg
+		dataType: double
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: f2c28f38-146d-40e6-87ce-b32f3beea96c
+		summarizeBy: sum
+		sourceColumn: salary_hour_avg
+
+		annotation SummarizationSetBy = Automatic
+
+	column salary_hour_adj = ```
+			job_postings_fact[salary_hour_avg] * 2080 
+			```
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: ff76e317-49a9-4d93-993a-94f166156f04
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column salary_hour_or_year_avg = ```
+			IF(NOT(ISBLANK(job_postings_fact[salary_year_avg])),job_postings_fact[salary_year_avg],job_postings_fact[salary_hour_adj]) 
+			```
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 4fc995ec-15ef-49e2-bf61-a4e91680477f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7bbb34c4-5494-414b-abac-1709f91a5931
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Cleaned_Job_Country =
+			
+			VAR Country = TRIM(job_postings_fact[job_country])
+			RETURN
+			IF(
+			    ISBLANK(job_postings_fact[job_country]) || Country = "",
+			    job_postings_fact[search_location],
+			    Country
+			)
+		lineageTag: 8da8497d-a27a-4ac6-a11f-77eda49c289f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cleaned_salary_rate =
+			
+			VAR Salary_rate = TRIM(job_postings_fact[salary_rate])
+			RETURN
+			IF(
+			    ISBLANK(job_postings_fact[salary_rate]) || Salary_rate = "",
+			    "Salary Unmentioned",
+			    Salary_rate
+			)
+		lineageTag: 6a6befa9-3f21-448c-ac4e-b16a62972b4a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cleaned_job_platform =
+			
+			VAR Job_platform = TRIM(job_postings_fact[job_via])
+			RETURN
+			IF(
+			    ISBLANK(job_postings_fact[job_via]) || Job_platform = "",
+			    "Unknown",
+			    Job_platform
+			)
+		lineageTag: 5d8ef3b6-0ff8-4359-9ce4-59a36829846f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition job_postings_fact = m
+		mode: import
+		source =
+				let
+				    Source = star_schema_files,
+				    #"D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\_job_postings_fact csv" = Source{[#"Folder Path"="D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\",Name="job_postings_fact.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\_job_postings_fact csv",[Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"job_id", Int64.Type}, {"company_id", Int64.Type}, {"job_title_short", type text}, {"job_title", type text}, {"job_location", type text}, {"job_via", type text}, {"job_schedule_type", type text}, {"job_work_from_home", type logical}, {"search_location", type text}, {"job_posted_date", type datetime}, {"job_no_degree_mention", type logical}, {"job_health_insurance", type logical}, {"job_country", type text}, {"salary_rate", type text}, {"salary_year_avg", Int64.Type}, {"salary_hour_avg", type number}}),
+				    #"Inserted Date" = Table.AddColumn(#"Changed Type", "Date", each DateTime.Date([job_posted_date]), type date),
+				    #"Replaced Value" = Table.ReplaceValue(#"Inserted Date","via ","",Replacer.ReplaceText,{"job_via"}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Replaced Value",{{"job_via", Text.Trim, type text}})
+				in
+				    #"Trimmed Text"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

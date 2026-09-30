@@ -1,0 +1,60 @@
+table company_dim
+	lineageTag: 496fd49e-39b0-4fab-ab20-5c418e5dfdff
+
+	column company_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b97d43a-dcaa-4c11-b929-59a454d4b272
+		summarizeBy: none
+		sourceColumn: company_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: 262b5ef4-34ba-49a7-a991-4275ebd59850
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column link
+		dataType: string
+		lineageTag: 1a5f7ddd-d5b4-49b7-9aed-74a35fb73287
+		summarizeBy: none
+		sourceColumn: link
+
+		annotation SummarizationSetBy = Automatic
+
+	column link_google
+		dataType: string
+		lineageTag: 0b919fa3-8821-4f6f-b546-78c1f59bb771
+		summarizeBy: none
+		sourceColumn: link_google
+
+		annotation SummarizationSetBy = Automatic
+
+	column thumbnail
+		dataType: string
+		lineageTag: e7b8b64d-219e-4fb3-b25e-46d4626e9210
+		summarizeBy: none
+		sourceColumn: thumbnail
+
+		annotation SummarizationSetBy = Automatic
+
+	partition company_dim = m
+		mode: import
+		source =
+				let
+				    Source = star_schema_files,
+				    #"D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\_company_dim csv" = Source{[#"Folder Path"="D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\",Name="company_dim.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files\_company_dim csv",[Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"company_id", Int64.Type}, {"name", type text}, {"link", type text}, {"link_google", type text}, {"thumbnail", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

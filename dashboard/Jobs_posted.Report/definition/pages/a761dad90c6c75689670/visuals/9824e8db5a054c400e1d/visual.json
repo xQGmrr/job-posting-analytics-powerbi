@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "9824e8db5a054c400e1d",
+  "position": {
+    "x": 84.391363339419414,
+    "y": 146.14114139265314,
+    "z": 5000,
+    "height": 45.2831705723714,
+    "width": 164.66607480862325,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Tech Jobs",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "24pt",
+                      "color": "#f8fafc"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

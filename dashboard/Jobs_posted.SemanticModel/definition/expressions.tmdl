@@ -1,0 +1,11 @@
+expression star_schema_files =
+		let
+		    Source = Folder.Files("D:\DataAnalyst\PowerBi\PowerBI_Data_Analytics_Course-20260914T060552Z-1-002\PowerBI_Data_Analytics_Course\Data\star_schema_files")
+		in
+		    Source
+	lineageTag: 2c1eeeba-cff7-44ea-8e6f-98a4b7030b03
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,33 @@
+relationship AutoDetected_bd56ce8a-0fef-4aa8-917e-2dff93563912
+	crossFilteringBehavior: bothDirections
+	fromColumn: skills_job_dim.job_id
+	toColumn: job_postings_fact.job_id
+
+relationship AutoDetected_855756c6-d05f-4f97-9e53-17c797ddecd1
+	crossFilteringBehavior: bothDirections
+	fromColumn: schedule_dim.job_id
+	toColumn: job_postings_fact.job_id
+
+relationship AutoDetected_c560d843-74c7-40a9-aaa8-2a0336831421
+	crossFilteringBehavior: bothDirections
+	fromColumn: job_postings_fact.company_id
+	toColumn: company_dim.company_id
+
+relationship AutoDetected_abd9591a-d600-44ba-8ce8-4d5256c6d160
+	fromColumn: skills_job_dim.skill_id
+	toColumn: skills_dim.skill_id
+
+relationship f5f1e4c6-1577-40fd-91fc-0e42c05fbca7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: job_postings_fact.job_posted_date
+	toColumn: LocalDateTable_070180a6-e424-48d5-a9c6-ca663336c2e5.Date
+
+relationship a3ff9ee2-fcde-47f3-8232-3ab8b47c593f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: date_dim.Date
+	toColumn: LocalDateTable_89fd7331-3abf-458e-8606-f274c39f86a3.Date
+
+relationship 3bc96b92-18b3-63c3-105a-cd28ed08524d
+	fromColumn: job_postings_fact.Date
+	toColumn: date_dim.Date
+

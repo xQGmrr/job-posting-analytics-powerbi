@@ -1,0 +1,50 @@
+table Category
+	lineageTag: 58bdab79-e01e-4771-956c-69504ae40806
+
+	column Category
+		lineageTag: 8e7cfef8-dc27-48b6-9f0c-6aad0fbd3e17
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Category Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Category Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Category Fields'
+		isHidden
+		lineageTag: 4347f60f-ca50-489c-b2f1-e6335c50abd0
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Category Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Category Order'
+		isHidden
+		formatString: 0
+		lineageTag: bdac5c8e-3267-49d9-ae6d-4413cfaf73d1
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Category = calculated
+		mode: import
+		source =
+				{
+				    ("Job Title", NAMEOF('job_postings_fact'[job_title_short]), 0),
+				    ("Company", NAMEOF('company_dim'[name]), 1),
+				    ("Skills", NAMEOF('skills_dim'[skills]), 2),
+				    ("Country", NAMEOF('job_postings_fact'[job_country]), 3)
+				}
+
+	annotation PBI_Id = b8bb17cf4ad7496db4230e02c6a6203c
+
